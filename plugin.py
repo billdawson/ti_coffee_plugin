@@ -32,6 +32,19 @@ try:
 except:
 	import simplejson as json
 
+# The Titanium build scripts contain their own json library (Patrick Logan's),
+# so we have to figure out which json functions to use.
+json_read = None
+json_write = None
+if hasattr(json, 'loads'):
+	json_read = json.loads
+else:
+	json_read = json.read
+if hasattr(json, 'dumps'):
+	json_write = json.dumps
+else:
+	json_write = json.write
+
 HASHES_FILE = 'file_hashes.json'
 ERROR_LOG_PREFIX = '[ERROR]'
 INFO_LOG_PREFIX = '[INFO]'
@@ -60,14 +73,16 @@ def read_file_hashes(path):
 	hashes = {}
 	if os.path.exists(hashes_file):
 		f = open(hashes_file, 'r')
-		hashes = json.load(f)
+		text = f.read()
 		f.close()
+		hashes = json_read(text)
 	return hashes
 
 def write_file_hashes(path, hashes):
 	hashes_file = os.path.join(path, HASHES_FILE)
+	text = json_write(hashes)
 	f = open(hashes_file, 'w')
-	json.dump(hashes, f)
+	f.write(text)
 	f.close()
 
 def get_md5_digest(path):
