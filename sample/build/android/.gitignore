@@ -4,3 +4,5 @@ bin
 res
 gen
 AndroidManifest.xml
+.project
+.pydevproject

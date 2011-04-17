@@ -4,7 +4,16 @@ The ti_coffee_plugin simply scans your Titanium project's `Resources` folder at 
 
 # Setup
 
-First, of course, you'll need the `coffee` command available on your system.  If you can't go out to a command-line/terminal and successfully execute `coffee`, then be sure to setup [CoffeeScript][] correctly.
+## CoffeeScript
+
+First, of course, you'll need the `coffee` command available on your system.  If you can't go out to a command-line/terminal and successfully execute `coffee`, then be sure to setup [CoffeeScript][] correctly.  **Also**, if you're on OS X and you used Homebrew to install CoffeeScript and Node.js, GUI applications such as Titanium Developer and Titanium Studio -- which are precisely the apps that launch your Titanium project's build process and thus this plugin -- might not be able to successfully execute `coffee` because `/usr/local/bin` is not in the PATH by default for GUI apps, and changes to `~/.profile`, `/etc/paths`, etc., are not useful for GUI apps.  The easiest solution is to simply symlink `coffee` and `node` in `/usr/bin`, which is in the PATH:
+
+    $ sudo ln -s /usr/local/bin/node /usr/bin/node
+	$ sudo ln -s /usr/local/bin/coffee /usr/bin/coffee
+
+If you'd rather not do that, you can muck around with `~/.MacOSX/environment.plist` following [Apple's instructions](http://developer.apple.com/library/mac/#qa/qa1067/_index.html).
+
+## This Plugin
 
 Next, you need to tell your Titanium project to run this plugin when the Titanium build scripts build your project.
 

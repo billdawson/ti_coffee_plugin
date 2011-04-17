@@ -2,3 +2,6 @@ tmp
 *.js
 *.swp
 build.log
+api.jsca
+.project
+.pydevproject

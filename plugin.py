@@ -28,9 +28,14 @@ See README.md for a longer description.
 import os, sys, subprocess
 
 def err(s):
-	# Matches the [ERROR]... messages of the Titanium builder.py, so the 
+	# Matches the [ERROR]... messages of the Titanium builder.py, so the
 	# message can be recognized as an error for console purposes
 	print "[ERROR] %s" % s
+
+def info(s):
+	# Matches the [INFO]... messages of the Titanium builder.py, so the
+	# message can be recognized as an info msgs for console purposes
+	print "[INFO] %s" % s
 
 def build_coffee(path):
 	command_args = ['coffee', '-b', '-c', path]
@@ -44,12 +49,16 @@ def build_coffee(path):
 			err("CoffeeScript compiler call for %s failed but no error message was generated" % path)
 
 def build_all_coffee(path, simulate=False):
+	info_msg_shown = False
 	for root, dirs, files in os.walk(path):
 		for name in files:
 			if name.endswith('.coffee'):
 				if simulate:
 					print "Would build: %s" % os.path.join(root, name)
 				else:
+					if not info_msg_shown:
+						info("Compiling CoffeeScript files")
+						info_msg_shown = True
 					build_coffee(os.path.join(root, name))
 
 
