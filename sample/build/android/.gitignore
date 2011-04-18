@@ -1,9 +1,0 @@
-src
-lib
-bin
-res
-gen
-AndroidManifest.xml
-.project
-.pydevproject
-default.properties

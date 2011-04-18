@@ -1,0 +1,5 @@
+# ti_coffee_plugin Sample
+
+- app.coffee: A very simple Coffeescript file that can generate an example app.js when your project is compiled.
+
+- tiapp.xml.example: Shows you how to make the `<plugins>` entry in your tiapp.xml.

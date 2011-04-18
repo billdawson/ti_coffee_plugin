@@ -36,7 +36,9 @@
 	</android>
 	<modules>
 	</modules>
+	<!-- HERE IS THE PART YOU NEED TO ADD TO REGISTER THE PLUGIN -->
 	<plugins>
 		<plugin version="1.0">ti_coffee_plugin</plugin>
 	</plugins>
+	<!-- ******************************************************* -->
 </ti:app>
