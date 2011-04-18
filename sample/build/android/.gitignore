@@ -6,3 +6,4 @@ gen
 AndroidManifest.xml
 .project
 .pydevproject
+default.properties

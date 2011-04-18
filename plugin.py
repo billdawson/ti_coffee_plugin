@@ -45,7 +45,7 @@ if hasattr(json, 'dumps'):
 else:
 	json_write = json.write
 
-HASHES_FILE = 'file_hashes.json'
+HASHES_FILE = 'coffee_file_hashes.json'
 ERROR_LOG_PREFIX = '[ERROR]'
 INFO_LOG_PREFIX = '[INFO]'
 DEBUG_LOG_PREIX = '[DEBUG]'
@@ -75,7 +75,8 @@ def read_file_hashes(path):
 		f = open(hashes_file, 'r')
 		text = f.read()
 		f.close()
-		hashes = json_read(text)
+		if len(text):
+			hashes = json_read(text)
 	return hashes
 
 def write_file_hashes(path, hashes):
@@ -105,10 +106,9 @@ def build_coffee(path):
 		return False
 	return True
 
-def build_all_coffee(path, simulate=False):
+def build_all_coffee(path, build_path):
 	info_msg_shown = False
-	this_folder = os.path.abspath(os.path.dirname(sys._getframe(0).f_code.co_filename))
-	file_hashes = read_file_hashes(this_folder)
+	file_hashes = read_file_hashes(build_path)
 	for root, dirs, files in os.walk(path):
 		for name in files:
 			if name.endswith('.coffee'):
@@ -119,23 +119,11 @@ def build_all_coffee(path, simulate=False):
 				digest = get_md5_digest(file_path)
 				if (not file_path in file_hashes) or (
 							file_hashes[file_path] != digest):
-					if simulate:
-						print "Would build: %s" % file_path
-					else:
-						if build_coffee(file_path):
-							file_hashes[file_path] = digest
-	write_file_hashes(this_folder, file_hashes)
+					if build_coffee(file_path):
+						file_hashes[file_path] = digest
+	write_file_hashes(build_path, file_hashes)
 
 
 def compile(config):
-	build_all_coffee(os.path.join(config['project_dir'], 'Resources'))
-
-if __name__ == "__main__":
-	simulate = "--simulate" in sys.argv
-	cwd = os.getcwd()
-	path = os.path.join(cwd, '..', '..', 'Resources')
-	path = os.path.normpath(path)
-	if simulate:
-		print "Root: " + path
-	build_all_coffee(path, simulate)
+	build_all_coffee(os.path.join(config['project_dir'], 'Resources'), os.path.abspath(os.path.join(config['build_dir'], '..')))
 

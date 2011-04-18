@@ -1,9 +1,9 @@
 Titanium.UI.backgroundColor = 'white'
 Titanium.include 'sub/sub.js'
 
-open = (e) ->
-	alert 'window did open'
+onOpen = (e) ->
+	alert 'window opened'
 
 win = Titanium.UI.createWindow(winargs)
-win.addEventListener 'open', open
+win.addEventListener 'open', onOpen
 win.open()

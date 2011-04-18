@@ -37,6 +37,6 @@
 	<modules>
 	</modules>
 	<plugins>
-		<plugin>ti_coffee_script</plugin>
+		<plugin version="1.0">ti_coffee_plugin</plugin>
 	</plugins>
 </ti:app>

@@ -5,3 +5,5 @@ build.log
 api.jsca
 .project
 .pydevproject
+coffee_file_hashes.json
+*.lock

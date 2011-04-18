@@ -6,7 +6,7 @@ The ti_coffee_plugin simply scans your Titanium project's `Resources` folder at 
 
 ## Python
 
-Requires Python 2.6, because the `json` module is used.  Alternatively, you can use Python 2.5 as long as you also have the [`simplejson`](http://pypi.python.org/pypi/simplejson/) module installed.  The `hashlib` module is also used, and that appeared first in Python 2.5, I believe.
+Requires Python 2.5, because the `hashlib` module is used.
 
 ## CoffeeScript
 
@@ -21,20 +21,28 @@ If you'd rather not do that, you can muck around with `~/.MacOSX/environment.pli
 
 ## This Plugin
 
+In the folder which houses your Titanium SDKs -- on OS X this would be `/Library/Application Support/Titanium`, create a `plugins/ti_coffee_plugin/1.0` folder.  Put the plugin.py from this repository into that folder.  So on OS X you would have this file:
+
+	/Library/Application Support/Titanium/plugins/ti_coffee_plugin/1.0/plugin.py
+
 Next, you need to tell your Titanium project to run this plugin when the Titanium build scripts build your project.
 
 Build-time plugins for Titanium projects are invoked if the plugin is registered in the project's tiapp.xml file.  For the ti_coffee_plugin, you could do it like this:
 
 	<!-- This is a child element of <ti:app> in tiapp.xml -->
 	<plugins>
-		<plugin>ti_coffee_plugin</plugin>
+		<plugin version="1.0">ti_coffee_plugin</plugin>
 	</plugins>
-
-Then put the plugin.py into the folder `plugins/ti_coffee_plugin` in your project.  Voilà, it will be invoked automatically when you build your files.
 
 # Sample Application
 
-The `sample/` folder contains a very simple Titanium project.  **Important**: The sample won't work unless you copy the plugin.py down into the `sample/plugins/ti_coffee_plugin/` folder.  I didn't want to put plugin.py in two places in the source tree.
+The `sample/` folder contains a very simple Titanium project whose tiapp.xml is configured per the above instructions.  You can import it into Titanium Studio or Titanium Developer.
+
+# Disadvantages of Using This Plugin
+
+- Your .coffee files will also end up in the application package that gets delivered to the device/simulator/emulator.  Unfortunately, the Titanium build plugins don't (currently) get notified when the packaging is about to occur.  They are just notified once: before the build begins.  Of course, your .coffee files are plain text and the packaging (at least on Android, but I imagine on iOS as well) compresses them.
+
+- There might be implications when using the upcoming "fastdev" feature for Android, whereby only changed files are served up to the application being tested on device or in the emulator.  Because the updating of a .coffee file is not going to be useful unless the Javascript also gets generated, you would have to re-build more often that you would if you were just updating Javascript files.  The difference may not be too significant, however.  We'll see once the fastdev feature is released.
 
 # License
 
