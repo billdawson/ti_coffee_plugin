@@ -44,6 +44,8 @@ The `sample/` folder contains a very simple `app.coffee` as a proof-of-concept. 
 
 - There might be implications when using the upcoming "fastdev" feature for Android, whereby only changed files are served up to the application being tested on device or in the emulator.  Because the updating of a .coffee file is not going to be useful unless the Javascript also gets generated, you would have to re-build more often that you would if you were just updating Javascript files.  The difference may not be too significant, however.  We'll see once the fastdev feature is released.
 
+- You will not be able to take advantage of Titanium Studio's code assist features (code completion, etc.) if you're tying in CoffeeScript.
+
 # License
 
 The code is Copyright 2011 by William Dawson, and made available under the Apache 2.0 license.  Please see the LICENSE file that accompanies the source, and the licensing declarations at the top of each source file.
