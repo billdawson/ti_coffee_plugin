@@ -1,5 +1,4 @@
 Titanium.UI.backgroundColor = 'white'
-Titanium.include 'sub/sub.js'
 winargs =
 	backgroundColor: 'red'
 	fullscreen: false
