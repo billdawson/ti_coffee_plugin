@@ -36,7 +36,7 @@ Build-time plugins for Titanium projects are invoked if the plugin is registered
 
 # Sample Application
 
-The `sample/` folder contains a very simple Titanium project whose tiapp.xml is configured per the above instructions.  You can import it into Titanium Studio or Titanium Developer.
+The `sample/` folder contains a very simple `app.coffee` as a proof-of-concept.  You can copy that file into a new project, then run the project to see how it works.  To do that successfully, you'll also need to update your `tiapp.xml` following the example inside `tiapp.xml.example`.
 
 # Disadvantages of Using This Plugin
 
