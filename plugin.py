@@ -50,13 +50,16 @@ ERROR_LOG_PREFIX = '[ERROR]'
 INFO_LOG_PREFIX = '[INFO]'
 DEBUG_LOG_PREIX = '[DEBUG]'
 
-def log(prefix, msg):
-	print "%s %s" % (prefix, msg)
+def log(prefix, msg, stream=None):
+	if not stream is None:
+		print >> stream, "%s %s" % (prefix, msg)
+	else:
+		print "%s %s" % (prefix, msg)
 
-def err(msg):
+def err(msg, stream=None):
 	# Matches the [ERROR]... messages of the Titanium builder.py, so the
 	# message can be recognized as an error for console purposes
-	log(ERROR_LOG_PREFIX, msg)
+	log(ERROR_LOG_PREFIX, msg, stream)
 
 def info(msg):
 	# Matches the [INFO]... messages of the Titanium builder.py, so the
@@ -106,9 +109,9 @@ def build_coffee(path):
 		return False
 	return True
 
-def build_all_coffee(path, build_path):
+def build_all_coffee(path, file_hash_folder):
 	info_msg_shown = False
-	file_hashes = read_file_hashes(build_path)
+	file_hashes = read_file_hashes(file_hash_folder)
 	for root, dirs, files in os.walk(path):
 		for name in files:
 			if name.endswith('.coffee'):
@@ -121,9 +124,26 @@ def build_all_coffee(path, build_path):
 							file_hashes[file_path] != digest):
 					if build_coffee(file_path):
 						file_hashes[file_path] = digest
-	write_file_hashes(build_path, file_hashes)
+	write_file_hashes(file_hash_folder, file_hashes)
 
 
-def compile(config):
-	build_all_coffee(os.path.join(config['project_dir'], 'Resources'), os.path.abspath(os.path.join(config['build_dir'], '..')))
+def compile(config, file_hash_folder=None):
+	if file_hash_folder is None:
+		file_hash_folder = os.path.abspath(os.path.join(config['build_dir'], '..'))
+	build_all_coffee(os.path.join(config['project_dir'], 'Resources'), file_hash_folder)
+
+if __name__ == "__main__":
+	proj_dir = None
+	if len(sys.argv) < 2:
+		proj_dir = os.getcwd()
+	else:
+		proj_dir = sys.argv[1]
+	resource_dir = os.path.join(proj_dir, 'Resources')
+	if not os.path.exists(resource_dir):
+		err("%s does not look like Titanium project folder.  Resources/ folder not found." % proj_dir, sys.stderr)
+	config = {'project_dir': proj_dir}
+	if os.path.exists(os.path.join(proj_dir, 'build')):
+		compile(config, os.path.join(proj_dir, 'build'))
+	else:
+		compile(config, proj_dir)
 
