@@ -4,6 +4,8 @@ The ti_coffee_plugin simply scans your Titanium project's `Resources` folder at 
 
 # Setup
 
+(In addition to these instructions, see also videos concerning using this with [Titanium Mobile](http://www.youtube.com/watch?v=Jxu_5wcS9YY) and [Titanium Desktop](http://www.youtube.com/watch?v=2ikb-4tdygg).)
+
 ## Python
 
 Requires Python 2.5, because the `hashlib` module is used.
