@@ -48,6 +48,8 @@ The `sample/` folder contains a very simple `app.coffee` as a proof-of-concept. 
 
 - You will not be able to take advantage of Titanium Studio's code assist features (code completion, etc.) if you're tying in CoffeeScript.
 
+- If you have a JS runtime error, the line number it gives you most likely will be considerably off from the line number in your `.coffee` file.
+
 # License
 
 The code is Copyright 2011 by William Dawson, and made available under the Apache 2.0 license.  Please see the LICENSE file that accompanies the source, and the licensing declarations at the top of each source file.
